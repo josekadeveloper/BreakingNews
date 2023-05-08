@@ -4,8 +4,9 @@ export const handler: Handler = async (
   event: APIGatewayEvent
 ): Promise<APIGatewayProxyResult> => {
   try {
-    const response = await fetch('https://www.marca.com/');
+    const response = await fetch('https://es.wikipedia.org/wiki/Wikipedia:Portada');
     const data = await response.json();
+    console.log(data);
 
     return {
       statusCode: 200,
