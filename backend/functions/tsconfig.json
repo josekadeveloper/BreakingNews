@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "esModuleInterop": true,
     "module": "commonjs",
     "noImplicitReturns": true,
     "noUnusedLocals": true,
@@ -7,6 +8,10 @@
     "sourceMap": true,
     "strict": true,
     "target": "es2017"
+  },
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node"
   },
   "compileOnSave": true,
   "include": [
