@@ -1,7 +1,7 @@
 import { getDoc, doc } from "@firebase/firestore/lite";
 import { db } from "./main";
 
-export async function getThisDayEvents(day) {
+export async function getTodaySportNews(day) {
     const daysRef = doc(db, `sport news/${day}`);
     const docSnap = await getDoc(daysRef);
 
