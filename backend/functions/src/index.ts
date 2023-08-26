@@ -20,7 +20,7 @@ exports.pubsub = functions
     .onRun(async () => {
       try {
         const data = await scrapedData();
-        db.collection('days').doc(getToday()).set(data);
+        db.collection('sport news').doc(getToday()).set(data);
       } catch (error: any) {
         throw new Error(error);
       }
