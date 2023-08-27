@@ -1,4 +1,4 @@
-import { scrapedData } from './scraper';
+import { scrapedDataNews, scrapedDataNewsDescription } from './scraper';
 
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
@@ -19,8 +19,11 @@ exports.pubsub = functions
     .timeZone('Europe/Madrid')
     .onRun(async () => {
       try {
-        const data = await scrapedData();
-        db.collection('sport news').doc(getToday()).set(data);
+        const news = await scrapedDataNews();
+        const newsDescription = await scrapedDataNewsDescription();
+
+        db.collection('sport news').doc(getToday()).set(news);
+        db.collection('sport news description').doc(getToday()).set(newsDescription);
       } catch (error: any) {
         throw new Error(error);
       }

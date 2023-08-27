@@ -2,18 +2,21 @@ import puppeteer, { Browser } from 'puppeteer';
 
 const url = 'https://marca.com';
 
-export async function scrapedData() {
+export async function scrapedDataNews() {
     const browser: Browser = await puppeteer.launch({ headless: true });
-    const page = await browser.newPage();
-    await page.goto(url);
 
-    const news = await page.evaluate(() => {
+    const pagePrincipal = await browser.newPage();
+
+    await pagePrincipal.goto(url);
+
+    const news = await pagePrincipal.evaluate(() => {
         const articleElements = Array.from(document.querySelectorAll('article'))
             .filter(article => article.querySelector('img'))
-            .slice(0, 15);
+            .slice(0, 8);
         return articleElements.map((article) => ({
             image: article.querySelector('img')?.getAttribute('src'),
-            title: article.querySelector('a')?.innerText ? article.querySelector('a')?.innerText : article.querySelector('h2')?.innerText
+            title: article.querySelector('a')?.innerText ? article.querySelector('a')?.innerText : article.querySelector('h2')?.innerText,
+            link: article.querySelector('a')?.getAttribute('href')
         }));
     });
 
@@ -22,4 +25,31 @@ export async function scrapedData() {
     return { news };
 }
 
-scrapedData();
+export async function scrapedDataNewsDescription() {
+    const browser: Browser = await puppeteer.launch({ headless: true });
+
+    const news = (await scrapedDataNews()).news;
+
+    let newsDescription = [];
+
+    for (let index = 0; index < news.length; index++) {
+
+        const pageSecondary = await browser.newPage();
+        await pageSecondary.goto(news[index].link as string);
+
+        newsDescription.push(await pageSecondary.evaluate(() => {
+            const articleElements = Array.from(document.querySelectorAll('article')).filter(article => article.querySelector('h2')).slice(0, 1);
+
+            return Object.assign({}, ...articleElements.map((article) => ({
+                image: article.querySelector('img')?.getAttribute('src'),
+                title: article.querySelector('h2')?.innerText,
+                subtitle: article.querySelector('h1')?.innerText,
+                description: article.querySelector('p')?.innerText
+            })))
+        }));
+    }
+
+    await browser.close();
+
+    return { newsDescription };
+}
