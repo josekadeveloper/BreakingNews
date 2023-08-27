@@ -15,7 +15,7 @@ function App() {
   };
 
   return (
-    <div className='max-w-screen-lg mx-auto divide-y'>
+    <div className='max-w-screen-md mx-auto'>
       <h1 className='bg-yellow-300 rounded-lg mt-6 text-slate-800 font-bold text-4xl flex justify-center items-center h-40 mb-6'>
           SPORT BREAKING NEWS
       </h1>
@@ -24,8 +24,8 @@ function App() {
           sportNews.news.map((sportNew, idx) => {
             return (
               <div className='pt-6' key={idx}>
-                <h2 className='text-2xl mb-4'>Featured New: {sportNew.title}</h2>
-                <img src={sportNew.image} />
+                <h2 className='text-2xl underline mb-4'>Featured New: </h2><span className='text-2xl text-yellow-300 hover:text-yellow-600 cursor-pointer'>{sportNew.title}</span>
+                <img className='pt-1' src={sportNew.image} />
               </div>
             )
           })
