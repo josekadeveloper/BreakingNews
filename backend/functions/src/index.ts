@@ -14,7 +14,7 @@ const getToday = () => {
 
 exports.pubsub = functions
     .region('europe-west3')
-    .runWith({maxInstances: 100})
+    .runWith({timeoutSeconds: 30, memory: '2GB', maxInstances: 10})
     .pubsub.schedule('0 0 * * *')
     .timeZone('Europe/Madrid')
     .onRun(async () => {
