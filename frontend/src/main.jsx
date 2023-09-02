@@ -6,12 +6,15 @@ import './index.css'
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore/lite";
 import { firebaseConfig } from './constants.js';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <App />
+    <Router>
+      <App />
+    </Router>
   </React.StrictMode>,
 )
