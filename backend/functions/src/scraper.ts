@@ -12,7 +12,8 @@ export async function scrapedDataNews() {
     const news = await pagePrincipal.evaluate(() => {
         const articleElements = Array.from(document.querySelectorAll('article'))
             .filter(article => article.querySelector('img'))
-            .slice(0, 8);
+            .slice(0, 10);
+
         return articleElements.map((article) => ({
             image: article.querySelector('img')?.getAttribute('src'),
             title: article.querySelector('a')?.innerText ? article.querySelector('a')?.innerText : article.querySelector('h2')?.innerText,
@@ -37,13 +38,15 @@ export async function scrapedDataNewsDescription() {
         const pageSecondary = await browser.newPage();
         await pageSecondary.goto(news[index].link as string);
 
+
         newsDescription.push(await pageSecondary.evaluate(() => {
-            const articleElements = Array.from(document.querySelectorAll('article')).filter(article => article.querySelector('h2')).slice(0, 1);
+            const articleElements = Array.from(document.querySelectorAll('article'))
+                .filter(article => article.querySelector('h1'));
 
             return Object.assign({}, ...articleElements.map((article) => ({
                 image: article.querySelector('img')?.getAttribute('src'),
-                title: article.querySelector('h2')?.innerText,
-                subtitle: article.querySelector('h1')?.innerText,
+                category: article.querySelector('h2')?.innerText,
+                title: article.querySelector('h1')?.innerText,
                 description: article.querySelector('p')?.innerText
             })))
         }));
@@ -51,5 +54,7 @@ export async function scrapedDataNewsDescription() {
 
     await browser.close();
 
-    return { newsDescription };
+    const newsDescriptionData = newsDescription.filter((obj, index, self) => {return !self.slice(0, index).every(({ image }) => image === obj.image)});
+
+    return { newsDescriptionData };
 }
