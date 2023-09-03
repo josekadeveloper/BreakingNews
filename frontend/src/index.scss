@@ -1,0 +1,26 @@
+@import 'loaders.css/src/animations/ball-zig-zag-deflect.scss';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+}
+
+.dark {
+  @apply bg-gray-800 text-zinc-50;
+}
+
+.loader-active {
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  width: 50px;
+  height: 50px;
+  animation: fadeOut 1s 1s;
+  animation-fill-mode: forwards;
+}
