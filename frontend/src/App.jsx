@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
-import DescriptionNew from './DescriptionNew';
-import SportNews from './SportNews';
+import DescriptionNew from './components/DescriptionNew';
+import SportNews from './components/SportNews';
 
 function App() {
   return (

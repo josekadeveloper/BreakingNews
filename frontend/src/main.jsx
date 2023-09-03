@@ -5,7 +5,7 @@ import './index.scss'
 
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore/lite";
-import { firebaseConfig } from './constants.js';
+import { firebaseConfig } from './utils/constants.js';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 const app = initializeApp(firebaseConfig);

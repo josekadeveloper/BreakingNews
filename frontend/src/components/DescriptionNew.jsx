@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getFormatedDay, getTodaySportNews, getTodaySportNewsDescription } from "./functions";
+import { getFormatedDay, getTodaySportNews, getTodaySportNewsDescription } from "../utils/functions";
+import { TODAY, YESTERDAY } from "../utils/constants";
 import Loader from 'react-loaders';
-import arrow from './assets/arrow.png';
+import arrow from '../assets/arrow.png';
 
 const DescriptionNew = () => {
   const { descriptionId } = useParams();
@@ -11,31 +12,27 @@ const DescriptionNew = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isFading, setIsFading] = useState(false);
 
-  const today = new Date();
-  const yesterday = new Date(today);
-  yesterday.setDate(today.getDate() - 1);
-
   useEffect(() => {
     setIsFading(true);
     setTimeout(() => {
       setIsLoading(false);
       setIsFading(false);
 
-      getSportNews(today);
-      getSportNewsDescription(today);
+      getSportNews(TODAY);
+      getSportNewsDescription(TODAY);
     }, 700);
   }, []);
 
   const getSportNews = (day) => {
     getTodaySportNews(getFormatedDay(day)).then((res) => {
-      res === undefined ? getSportNews(yesterday) :
+      res === undefined ? getSportNews(YESTERDAY) :
         setSportNews(res);
     });
   };
 
   const getSportNewsDescription = (day) => {
     getTodaySportNewsDescription(getFormatedDay(day)).then((res) => {
-      res === undefined ? getSportNewsDescription(yesterday) :
+      res === undefined ? getSportNewsDescription(YESTERDAY) :
         setSportNewsDescription(res);
     });
   };
