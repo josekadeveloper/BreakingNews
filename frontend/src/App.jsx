@@ -6,7 +6,7 @@ function App() {
   return (
     <Routes>
       <Route path='/' element={<SportNews />} />
-      <Route path="description" element={<DescriptionNew />} />
+      <Route path="/description/:descriptionId" element={<DescriptionNew />} />
     </Routes>
   )
 }
