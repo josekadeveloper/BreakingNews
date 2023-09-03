@@ -50,7 +50,7 @@ const DescriptionNew = () => {
   return (
     <>
     <div className={`${isFading ? 'opacity-0' : 'opacity-100'} transition-opacity duration-500`}>
-      <div className='max-w-screen-md mx-auto pt-6 pb-6'>
+      <div className='max-w-screen-md mx-auto p-6'>
         <div className='justify-center items-center'>
           {!isLoading && <button onClick={goBack}><img src={arrow} alt='Go Back' className="rotate-90"/></button>}
           <h3 className='text-1xl text-red-400 underline mb-4'>{sportNewsDescription?.newsDescriptionData?.[descriptionId]?.category}</h3>

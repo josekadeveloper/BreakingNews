@@ -42,8 +42,8 @@ const SportNews = () => {
     return (
         <>
             <div className={`${isFading ? 'opacity-0' : 'opacity-100'} transition-opacity duration-500`}>
-                <div className='max-w-screen-sm mx-auto'>
-                    <h1 className='bg-yellow-300 rounded-lg text-slate-800 font-bold text-4xl flex justify-center items-center h-40 mt-6 mb-6'>
+                <div className='max-w-screen-sm mx-auto max-[600px]:p-6'>
+                    <h1 className='bg-yellow-300 rounded-lg text-slate-800 font-bold text-4xl flex justify-center items-center h-40 mt-6 mb-6 max-[600px]:h-30 max-[600px]:text-2xl'>
                         SPORT BREAKING NEWS
                     </h1>
                     {sportNews?.news?.slice(1).map((sportNew, idx) => (

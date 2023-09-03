@@ -8,7 +8,10 @@ export default {
     extend: {
       maxHeight: {
         '128': '52rem',
-      }
+      },
+      screens: {
+        'mobile': '300px',
+      },
     },
   },
   plugins: [],
