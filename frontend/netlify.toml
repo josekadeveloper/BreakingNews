@@ -1,0 +1,3 @@
+[build]
+  ignore = ["^DEPRECATION WARNING"]
+  warn = ["^DEPRECATION WARNING"]
