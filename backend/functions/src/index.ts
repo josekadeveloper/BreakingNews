@@ -13,18 +13,26 @@ const getToday = () => {
 };
 
 exports.pubsub = functions
-    .region('europe-west3')
-    .runWith({timeoutSeconds: 30, memory: '2GB', maxInstances: 10})
-    .pubsub.schedule('* * * * *')
-    .timeZone('Europe/Madrid')
-    .onRun(async () => {
-      try {
-        const news = await scrapedDataNews();
-        const newsDescription = await scrapedDataNewsDescription();
+  .region('europe-west3')
+  .runWith({ timeoutSeconds: 30, memory: '2GB', maxInstances: 10 })
+  .pubsub.schedule('* * * * *')
+  .timeZone('Europe/Madrid')
+  .onRun(async () => {
+    try {
+      const news = await scrapedDataNews();
+      const newsDescription = await scrapedDataNewsDescription();
 
-        db.collection('sport news').doc(getToday()).update(news);
-        db.collection('sport news description').doc(getToday()).update(newsDescription);
-      } catch (error: any) {
-        throw new Error(error);
-      }
-    })
+      // Update the 'sport news' collection
+      const sportNewsRef = db.collection('sport news').doc(getToday());
+      await sportNewsRef.set({ data: news }, { merge: true });
+
+      // Update the 'sport news description' collection
+      const sportNewsDescRef = db.collection('sport news description').doc(getToday());
+      await sportNewsDescRef.set({ data: newsDescription }, { merge: true });
+
+      return null; // Indicate success
+    } catch (error: any) {
+      console.error('Error:', error);
+      throw new Error(error);
+    }
+  });
