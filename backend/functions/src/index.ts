@@ -22,8 +22,8 @@ exports.pubsub = functions
         const news = await scrapedDataNews();
         const newsDescription = await scrapedDataNewsDescription();
 
-        db.collection('sport news').doc(getToday()).set(news);
-        db.collection('sport news description').doc(getToday()).set(newsDescription);
+        db.collection('sport news').doc(getToday()).update(news);
+        db.collection('sport news description').doc(getToday()).update(newsDescription);
       } catch (error: any) {
         throw new Error(error);
       }
