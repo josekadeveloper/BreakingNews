@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getFormatedDay, getTodaySportNews, getTodaySportNewsDescription } from "../utils/functions";
-import { TODAY, YESTERDAY } from "../utils/constants";
+import { getTodaySportNews, getTodaySportNewsDescription } from "../utils/functions";
 import Loader from 'react-loaders';
 import arrow from '../assets/arrow.png';
 
@@ -18,29 +17,27 @@ const DescriptionNew = () => {
       setIsLoading(false);
       setIsFading(false);
 
-      getSportNews(TODAY);
-      getSportNewsDescription(TODAY);
+      getSportNews();
+      getSportNewsDescription();
     }, 700);
   }, []);
 
-  const getSportNews = (day) => {
-    getTodaySportNews(getFormatedDay(day)).then((res) => {
-      res === undefined ? getSportNews(YESTERDAY) :
+  const getSportNews = () => {
+    getTodaySportNews().then((res) => {
         setSportNews(res);
     });
   };
 
-  const getSportNewsDescription = (day) => {
-    getTodaySportNewsDescription(getFormatedDay(day)).then((res) => {
-      res === undefined ? getSportNewsDescription(YESTERDAY) :
+  const getSportNewsDescription = () => {
+    getTodaySportNewsDescription().then((res) => {
         setSportNewsDescription(res);
     });
   };
 
   const getImageSrc = () => {
-    return sportNewsDescription?.data?.newsDescriptionData?.[descriptionId]?.image
-      ? sportNews?.data?.news?.slice(1)[descriptionId]?.image
-      : sportNewsDescription?.data?.newsDescriptionData?.[descriptionId]?.image;
+    return sportNewsDescription?.[descriptionId]?.image
+      ? sportNews?.slice(1)[descriptionId]?.image
+      : sportNewsDescription?.[descriptionId]?.image;
   }
 
   const goBack = () => {
@@ -53,9 +50,9 @@ const DescriptionNew = () => {
       <div className='max-w-screen-md mx-auto p-6'>
         <div className='justify-center items-center'>
           {!isLoading && <button onClick={goBack}><img src={arrow} alt='Go Back' className="rotate-90"/></button>}
-          <h3 className='text-1xl text-red-400 underline mb-4'>{sportNewsDescription?.data?.newsDescriptionData?.[descriptionId]?.category}</h3>
-          <h2 className='text-1xl text-yellow-300 mb-4'>{sportNewsDescription?.data?.newsDescriptionData?.[descriptionId]?.title}</h2>
-          <h2 className='text-1xl text-white mb-4'>{sportNewsDescription?.data?.newsDescriptionData?.[descriptionId]?.description}</h2>
+          <h3 className='text-1xl text-red-400 underline mb-4'>{sportNewsDescription?.[descriptionId]?.category}</h3>
+          <h2 className='text-1xl text-yellow-300 mb-4'>{sportNewsDescription?.[descriptionId]?.title}</h2>
+          <h2 className='text-1xl text-white mb-4'>{sportNewsDescription?.[descriptionId]?.description}</h2>
           <img className='pt-1 max-h-[32rem]' src={getImageSrc()} />
         </div>
       </div>

@@ -1,9 +1,11 @@
-import puppeteer, { Browser } from 'puppeteer';
+import puppeteer from 'puppeteer';
+import { writeFile } from 'fs/promises';
+import { schedule } from 'node-cron';
 
 const url = 'https://marca.com';
 
 export async function scrapedDataNews() {
-    const browser: Browser = await puppeteer.launch({ headless: true });
+    const browser = await puppeteer.launch({ headless: true });
 
     const pagePrincipal = await browser.newPage();
 
@@ -23,11 +25,23 @@ export async function scrapedDataNews() {
 
     await browser.close();
 
+    const jsonDataNews = JSON.stringify(news);
+
+    try {
+        await writeFile('./src/db/news.json', jsonDataNews);
+      } catch (err) {
+        console.error('Error writing to file:', err);
+    }
+
     return { news };
 }
 
+schedule('* * * * *', () => {
+    scrapedDataNews();
+});
+
 export async function scrapedDataNewsDescription() {
-    const browser: Browser = await puppeteer.launch({ headless: true });
+    const browser = await puppeteer.launch({ headless: true });
 
     const news = (await scrapedDataNews()).news;
 
@@ -36,7 +50,7 @@ export async function scrapedDataNewsDescription() {
     for (let index = 0; index < news.length; index++) {
 
         const pageSecondary = await browser.newPage();
-        await pageSecondary.goto(news[index].link as string);
+        await pageSecondary.goto(news[index].link);
 
 
         newsDescription.push(await pageSecondary.evaluate(() => {
@@ -56,5 +70,17 @@ export async function scrapedDataNewsDescription() {
 
     const newsDescriptionData = newsDescription.filter((obj, index, self) => {return !self.slice(0, index).every(({ image }) => image === obj.image)});
 
+    const jsonDataNewsDescription = JSON.stringify(newsDescriptionData);
+
+    try {
+        await writeFile('./src/db/newsDescription.json', jsonDataNewsDescription);
+      } catch (err) {
+        console.error('Error writing to file:', err);
+    }
+
     return { newsDescriptionData };
 }
+
+schedule('* * * * *', () => {
+    scrapedDataNewsDescription();
+});
