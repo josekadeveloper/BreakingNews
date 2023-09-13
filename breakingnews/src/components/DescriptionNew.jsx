@@ -50,9 +50,9 @@ const DescriptionNew = () => {
       <div className='max-w-screen-md mx-auto p-6'>
         <div className='justify-center items-center'>
           {!isLoading && <button onClick={goBack}><img src={arrow} alt='Go Back' className="rotate-90"/></button>}
-          <h3 className='text-1xl text-red-400 underline mb-4'>{sportNewsDescription?.[descriptionId]?.category}</h3>
-          <h2 className='text-1xl text-yellow-300 mb-4'>{sportNewsDescription?.[descriptionId]?.title}</h2>
-          <h2 className='text-1xl text-white mb-4'>{sportNewsDescription?.[descriptionId]?.description}</h2>
+          <h3 className='text-1xl text-red-400 underline mb-4 max-[300px]:text-sm'>{sportNewsDescription?.[descriptionId]?.category}</h3>
+          <h2 className='text-1xl text-yellow-300 mb-4 max-[300px]:text-xs'>{sportNewsDescription?.[descriptionId]?.title}</h2>
+          <h2 className='text-1xl text-white mb-4 max-[300px]:text-xs'>{sportNewsDescription?.[descriptionId]?.description}</h2>
           <img className='pt-1 max-h-[32rem]' src={getImageSrc()} />
         </div>
       </div>
