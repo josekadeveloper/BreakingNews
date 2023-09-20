@@ -1,7 +1,7 @@
 # BreakingNews
 
 Web that will show the most important sport news today of scraping the website https://www.marca.com/, 
-developed in React, JavaScript, TypeScript, Tailwindcss and Sass
+developed in React, JavaScript, Tailwindcss and Sass
 
 ### Features
 
@@ -10,7 +10,6 @@ developed in React, JavaScript, TypeScript, Tailwindcss and Sass
 [![React](https://img.shields.io/badge/React-22272E?style=for-the-badge&logo=react
 )](https://es.react.dev/)
 [![JavaScript](https://img.shields.io/badge/Javascript-22272E?style=for-the-badge&logo=javascript)](https://www.javascript.com/)
-[![Typescript](https://img.shields.io/badge/Typescript-22272E?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
 [![Tailwindcss](https://img.shields.io/badge/Tailwindcss-22272E?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com/)
 [![Sass](https://img.shields.io/badge/Sass-22272E?style=for-the-badge&logo=sass
 )](https://sass-lang.com/)
