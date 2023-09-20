@@ -1,6 +1,5 @@
 import puppeteer from 'puppeteer';
 import { writeFile } from 'fs/promises';
-import { schedule } from 'node-cron';
 
 const url = 'https://marca.com';
 
@@ -28,17 +27,16 @@ export async function scrapedDataNews() {
     const jsonDataNews = JSON.stringify(news);
 
     try {
-        await writeFile('./src/db/news.json', jsonDataNews);
-      } catch (err) {
+        await writeFile('news.json', jsonDataNews);
+    } catch (err) {
         console.error('Error writing to file:', err);
     }
 
     return { news };
 }
 
-schedule('* * * * *', () => {
-    scrapedDataNews();
-});
+
+scrapedDataNews();
 
 export async function scrapedDataNewsDescription() {
     const browser = await puppeteer.launch({ headless: true });
@@ -68,19 +66,17 @@ export async function scrapedDataNewsDescription() {
 
     await browser.close();
 
-    const newsDescriptionData = newsDescription.filter((obj, index, self) => {return !self.slice(0, index).every(({ image }) => image === obj.image)});
+    const newsDescriptionData = newsDescription.filter((obj, index, self) => { return !self.slice(0, index).every(({ image }) => image === obj.image) });
 
     const jsonDataNewsDescription = JSON.stringify(newsDescriptionData);
 
     try {
-        await writeFile('./src/db/newsDescription.json', jsonDataNewsDescription);
-      } catch (err) {
+        await writeFile('newsDescription.json', jsonDataNewsDescription);
+    } catch (err) {
         console.error('Error writing to file:', err);
     }
 
     return { newsDescriptionData };
 }
 
-schedule('* * * * *', () => {
-    scrapedDataNewsDescription();
-});
+scrapedDataNewsDescription();
